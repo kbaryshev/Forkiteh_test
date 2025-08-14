@@ -1,0 +1,33 @@
+[project]
+name = "forkiteh-test"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "asyncpg>=0.30.0",
+    "environs>=14.3.0",
+    "fastapi>=0.116.1",
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.1.0",
+    "sqlalchemy>=2.0.43",
+    "tronpy>=0.6.1",
+    "uvicorn>=0.35.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12.8",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "tab"
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = ["E", "F", "UP", "B", "SIM", "I"]
+ignore = ["F401", "B008"]
