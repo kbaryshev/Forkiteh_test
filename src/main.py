@@ -15,7 +15,6 @@ async def lifespan(app: FastAPI):
 	"""Создает таблицы в БД при старте приложения и удаляет их после его выключения."""
 	command.upgrade(alembic_config, 'head')
 	yield
-	command.downgrade(alembic_config, 'base')
 
 
 app = FastAPI(lifespan=lifespan)
