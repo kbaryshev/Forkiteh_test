@@ -1,4 +1,6 @@
+## О проекте
 
+Проект содержит реализацию тестового задания по указанному ниже ТЗ.
 
 <details>
 
@@ -22,6 +24,39 @@
 
 </details>
 
+В проекте иcпользованы следующие технологии:
+- Python 3.13
+- FastAPI
+- SQLAlchemy(asyncpg и psycopg2)
+- Alembic
+- PostgreSQL
+- Pytest
+- TronPy
+- Uvicorn
+
+## Установка зависимостей
+
+Установка uv
+```shell
+wget -qO- https://astral.sh/uv/install.sh | sh
+```
+
+Клонирование репозитория
+```shell
+git clone https://github.com/kbaryshev/Forkiteh_test.git
+```
+
+Переход в директорию проекта
+```shell
+cd Forkiteh_test
+```
+
+Установка всех python зависимостей для проекта
+```shell
+uv pip install .
+```
+
+## Запуск
 
 Запуск PostgreSQL в контейнере
 ```shell
