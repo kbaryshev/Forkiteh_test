@@ -51,6 +51,11 @@ git clone https://github.com/kbaryshev/Forkiteh_test.git
 cd Forkiteh_test
 ```
 
+Создание venv
+```shell
+uv venv
+```
+
 Установка всех python зависимостей для проекта
 ```shell
 uv pip install .
