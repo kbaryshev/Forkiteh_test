@@ -1,3 +1,5 @@
+"""Содержит тесты для api кошельков."""
+
 import pytest
 
 from .conftest import BAD_ADDRESSES, TEST_ADDRESSES

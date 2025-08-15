@@ -1,3 +1,5 @@
+"""Содержит тесты для работы с БД."""
+
 from src.wallets.models import WalletModel
 from src.wallets.service import add_wallets_to_db, get_wallets_from_db
 
