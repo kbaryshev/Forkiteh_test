@@ -7,18 +7,15 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from tronpy import AsyncTron
 
-from src.config import TRON_NETWORK
-
 from .exceptions import WalletAlreadyExistException
 from .models import WalletModel
 from .schemas import Wallet
 
 
-async def get_wallet_data(account_address: str) -> Wallet:
+async def get_wallet_data(account_address: str, tron_client: AsyncTron) -> Wallet:
 	"""Возвращает данные по кошельку с адресом account_address из сети tron."""
-	async with AsyncTron(network=TRON_NETWORK) as client:
-		account_resource_info = await client.get_account_resource(account_address)
-		account_balance = await client.get_account_balance(account_address)
+	account_resource_info = await tron_client.get_account_resource(account_address)
+	account_balance = await tron_client.get_account_balance(account_address)
 
 	balance = float(account_balance)
 
@@ -36,9 +33,9 @@ async def get_wallet_data(account_address: str) -> Wallet:
 	)
 
 
-async def get_wallets_data(addresses: list[str]) -> list[Wallet]:
+async def get_wallets_data(addresses: list[str], tron_client: AsyncTron) -> list[Wallet]:
 	"""Возвращает данные по кошелькам с адресами из addresses из сети tron."""
-	tasks = [get_wallet_data(addr) for addr in addresses]
+	tasks = [get_wallet_data(addr, tron_client) for addr in addresses]
 
 	result = await asyncio.gather(*tasks)
 	return result
