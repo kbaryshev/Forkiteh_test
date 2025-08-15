@@ -2,6 +2,8 @@ import pytest
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
+from alembic import command
+from src.config import alembic_config
 from src.database import DB_URL, Base, get_db_session
 from src.main import app
 
@@ -52,7 +54,6 @@ async def http_client():
 @pytest.fixture(scope='function', autouse=True)
 async def override_db(get_session):
 	"""Фикстура для замены БД в приложении на тестовую."""
-
 	async def override_get_db():
 		yield get_session
 
@@ -60,10 +61,8 @@ async def override_db(get_session):
 
 
 @pytest.fixture(scope='function', autouse=True)
-async def create_tables(get_engine):
+async def create_tables():
 	"""Фикстура для создания и удаления таблиц в БД."""
-	async with get_engine.begin() as conn:
-		await conn.run_sync(Base.metadata.create_all)
+	command.upgrade(alembic_config, 'head')
 	yield
-	async with get_engine.begin() as conn:
-		await conn.run_sync(Base.metadata.drop_all)
+	command.downgrade(alembic_config, 'base')

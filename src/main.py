@@ -4,17 +4,18 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from alembic import command
 from src.wallets.router import wallets_router
 
-from .database import create_tables, delete_tables
+from .config import alembic_config
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
 	"""Создает таблицы в БД при старте приложения и удаляет их после его выключения."""
-	await create_tables()
+	command.upgrade(alembic_config, 'head')
 	yield
-	await delete_tables()
+	command.downgrade(alembic_config, 'base')
 
 
 app = FastAPI(lifespan=lifespan)

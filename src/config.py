@@ -4,8 +4,13 @@ from pathlib import Path
 
 from environs import Env
 
+from alembic.config import Config
+
 PROJECT_ROOT_DIR = Path.cwd()
 ENV_FILE_PATH = PROJECT_ROOT_DIR.joinpath('.env')
+
+
+alembic_config = Config(PROJECT_ROOT_DIR.joinpath('alembic.ini'))
 
 env = Env()
 env.read_env(ENV_FILE_PATH)
